@@ -31,6 +31,62 @@ select count(*) from action04;
 
 # 查看数据格式是否正确
 
-select * from action03 where user_id = '200001';
+select * from action03 where user_id = 200001;
+
+#对用户行为数据做求和
+### 02月数据
+create view v_action02 as
+select
+user_id,
+sku_id,
+cate,
+brand,
+sum (case when type=1 then type end)  sum_type1,
+sum (case when type=2 then type end)  sum_type2,
+sum (case when type=3 then type end)  sum_type3,
+sum (case when type=4 then type end)  sum_type4,
+sum (case when type=5 then type end)  sum_type5,
+sum (case when type=6 then type end)  sum_type6
+from action02 
+group by user_id,sku_id,cate,brand;
+
+insert overwrite directory '/jdata/sum_action02/' select * from v_action02;
+
+### 03月数据
+create view v_action03 as
+select
+user_id,
+sku_id,
+cate,
+brand,
+sum (case when type=1 then type end)  sum_type1,
+sum (case when type=2 then type end)  sum_type2,
+sum (case when type=3 then type end)  sum_type3,
+sum (case when type=4 then type end)  sum_type4,
+sum (case when type=5 then type end)  sum_type5,
+sum (case when type=6 then type end)  sum_type6
+from action03 
+group by user_id,sku_id,cate,brand;
+
+insert overwrite directory '/jdata/sum_action03/' select * from v_action03;
+
+### 04月数据
+create view v_action04 as
+select
+user_id,
+sku_id,
+cate,
+brand,
+sum (case when type=1 then type end)  sum_type1,
+sum (case when type=2 then type end)  sum_type2,
+sum (case when type=3 then type end)  sum_type3,
+sum (case when type=4 then type end)  sum_type4,
+sum (case when type=5 then type end)  sum_type5,
+sum (case when type=6 then type end)  sum_type6
+from action04 
+group by user_id,sku_id,cate,brand;
+
+insert overwrite directory '/jdata/sum_action04/' select * from v_action04;
+
 
 
